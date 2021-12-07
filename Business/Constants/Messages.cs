@@ -59,6 +59,7 @@ namespace Business.Constants
         public static string ImageDeleted = "Image deleted";
         public static string ImageUpdated = "Image updated";
         public static string ImageListed = "Image listed";
+        public static string UserNotFound = "User not found"
 
 
     }

@@ -48,6 +48,10 @@ namespace Business.Concrete
 
         public IDataResult<User> GetById(int userId)
         {
+            if (!CheckIfUserExists(userId))
+            {
+                return new ErrorResult(Messages.UserNotFound);
+            }
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId), Messages.UserListed);
         }
 
@@ -60,6 +64,16 @@ namespace Business.Concrete
         {
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
+        }
+
+        private bool CheckIfUserExists(int userId)
+        {
+            var result = _userDal.Get(u=>u.Id == userId);
+            if(result == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
