@@ -57,6 +57,10 @@ namespace Business.Concrete
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId), Messages.RentalListed);
         }
 
+        public IDataResult<List<RentalDetailDto>> GetDetailByCarId(int carId)
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(r => r.CarId == carId), Messages.RentalListed);
+        }
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetail(int rentalId)
         {
@@ -79,11 +83,20 @@ namespace Business.Concrete
         private IResult CheckIfCarReceived(int carId)
         {
             var result = _rentalDal.Get(c => c.CarId == carId);
-            if(result.ReturnDate != null)
+            if (result == null) // car is available
             {
                 return new SuccessResult();
             }
-            return new ErrorResult();
+            else
+            {
+                if (DateTime.Now.CompareTo(result.ReturnDate) > 0) 
+                {
+                    return new SuccessResult();
+                }
+                return new ErrorResult();
+
+            }
+
         }
 
     }
