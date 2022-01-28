@@ -36,6 +36,7 @@ namespace DataAccess.Concrete
                                  UserName = user.FirstName + " " + user.LastName,
                                  CompanyName = customer.CompanyName,
                                  ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
                                  RentDate = rental.RentDate,
                                  ReturnDate = rental.ReturnDate
                              };
